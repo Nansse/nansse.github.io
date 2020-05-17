@@ -1,7 +1,6 @@
 const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
 const COLOR_DARK = 0x260e04;
-var didLogin = false;
 
 export default class Login extends Phaser.Scene {
     constructor() {
@@ -24,24 +23,21 @@ export default class Login extends Phaser.Scene {
         var print = this.add.text(0, 0, '');
 
        var loginDialog = CreateLoginDialog(this, {
-            x: 400,
+            x: 550,
             y: 300,
             title: 'Welcome',
-            username: 'abc',
+            username: 'louvetau A',
             password: '123',
         })
             .on('login', function (username, password) {
-                didLogin = true
-            })
+                this.scene.start("Camp")
+            }, this)
             //.drawBounds(this.add.graphics(), 0xff0000);
             .popUp(500);
       
         this.add.text(0, 560, 'Click user name or password field to edit it\nClick Login button to show user name and password')
     }
 
-    update() { 
-        if (didLogin) {this.scene.start("Camp")}
-    }
 }
 
 const GetValue = Phaser.Utils.Objects.GetValue;
@@ -67,6 +63,7 @@ var CreateLoginDialog = function (scene, config, onSubmit) {
         .on('pointerdown', function () {
             var config = {
                 onTextChanged: function(textObject, text) {
+                    console.log("EST")
                     username = text;
                     textObject.text = text;
                 }
